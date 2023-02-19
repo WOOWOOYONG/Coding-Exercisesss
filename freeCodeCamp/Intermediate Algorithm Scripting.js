@@ -90,3 +90,47 @@ function destroyer(arr) {
 }
 
 console.log(destroyer([1, 2, 3, 1, 2, 3], 2, 3));
+
+// 4. Wherefore art thou
+// Make a function that looks through an array of objects (first argument)
+// and returns an array of all objects that have matching name and value pairs (second argument).
+// Each name and value pair of the source object has to be present in the object from the collection
+// if it is to be included in the returned array.
+
+// For example, if the first argument is
+// [{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }],
+// and the second argument is { last: "Capulet" }, then you must return the third object from the array (the first argument),
+// because it contains the name and its value, that was passed on as the second argument.
+
+//如果collection陣列裡面的物件有包含source當中的屬性和值
+//回傳一個包含匹配物件的陣列，否則回傳空陣列
+
+function whatIsInAName(collection, source) {
+  //先把source的屬性取出放入陣列
+  const sourceKeys = Object.keys(source);
+  //用filter遍歷collection內的每個object
+  return collection.filter((obj) => {
+    //用for loop遍歷source當中的所有屬性
+    for (let i = 0; i < sourceKeys.length; i++) {
+      //如果object沒有source的屬性或object中同屬性的值不同，回傳false不加入篩選後的陣列
+      if (
+        !obj.hasOwnProperty(sourceKeys[i]) ||
+        obj[sourceKeys[i]] !== source[sourceKeys[i]]
+      ) {
+        return false;
+      }
+    }
+    return true;
+  });
+}
+
+console.log(
+  whatIsInAName(
+    [
+      { first: 'Romeo', last: 'Montague' },
+      { first: 'Mercutio', last: null },
+      { first: 'Tybalt', last: 'Capulet' },
+    ],
+    { last: 'Capulet' }
+  )
+);
